@@ -34,7 +34,7 @@ o.Add("dddd","gggg",60);
 var b = o.Get<string>("dddd");
 ```
           
-//支持异步添加，删除，获取
+**支持异步添加，删除，获取**
 
 ```csharp
 var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Redis");
