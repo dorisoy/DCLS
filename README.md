@@ -1,4 +1,4 @@
-# DCLSystem
+# DCLS
 分布式缓存，实现一致性哈希算法，集成 couchbase,redis,webcache,membercache
 
      var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Redis");
