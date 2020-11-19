@@ -19,9 +19,9 @@
 **MemberCache:**
 
 ```csharp
-	var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.MemberCache");
-	o.Add("dddd","gggg",60);
-	var b = o.Get<string>("dddd");
+var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.MemberCache");
+o.Add("dddd","gggg",60);
+var b = o.Get<string>("dddd");
 ```
 **WebCache:**
 
