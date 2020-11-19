@@ -88,4 +88,5 @@ SocketPool，ObjectPool 默认minSize： 1 maxSize：50，并发数提高，请�
       <property name="maxSize" value="50"/>
       </binding>
     </bindings>
+    
   </cachingProvider>
