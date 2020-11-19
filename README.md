@@ -1,61 +1,58 @@
 # DCLS
-分布式缓存，实现一致性哈希算法，集成 couchbase,redis,webcache,membercache
+**分布式缓存，实现一致性哈希算法，集成 couchbase,redis,webcache,membercache**
 
-     var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Redis");
+ ```csharp
+    var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Redis");
+	o.Add("dddd","gggg",60);
+	var b = o.Get<string>("dddd");
+```
 
-          o.Add("dddd","gggg",60);
+**couchbase:**
 
-          var b = o.Get<string>("dddd");
+  ```csharp
+	var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Couchbase");
+	o.Add("dddd","gggg",60);
+	var b = o.Get<string>("dddd");
+	//value内容实现了GZIP压缩
+```
 
-couchbase:
+**MemberCache:**
 
-    var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Couchbase");
+```csharp
+	var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.MemberCache");
+	o.Add("dddd","gggg",60);
+	var b = o.Get<string>("dddd");
+```
+**WebCache:**
 
-          o.Add("dddd","gggg",60);
-
-          var b = o.Get<string>("dddd");
+    ```csharp
+	var o = CacheContainer.GetInstances<WebCacheProvider>(CacheTargetType.WebCache.ToString());
+	o.Add("dddd","gggg",60);
+	var b = o.Get<string>("dddd");
+	var o = CacheContainer.GetInstances<ICacheProvider>("WebCache");
+	o.Add("dddd","gggg",60);
+	var b = o.Get<string>("dddd");
+```
           
-          value内容实现了GZIP压缩
+	//支持异步添加，删除，获取
 
-MemberCache:
-
-    var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.MemberCache");
-
-          o.Add("dddd","gggg",60);
-
-          var b = o.Get<string>("dddd");
-WebCache:
-
-    var o = CacheContainer.GetInstances<WebCacheProvider>(CacheTargetType.WebCache.ToString());
-
-          o.Add("dddd","gggg",60);
-
-          var b = o.Get<string>("dddd");
-          
-     var o = CacheContainer.GetInstances<ICacheProvider>("WebCache");
-
-          o.Add("dddd","gggg",60);
-
-          var b = o.Get<string>("dddd");
-          
-支持异步添加，删除，获取
-
-     var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Redis");
-          o.AddAsync("dddd", "gggg", 4444);
-          o.GetAsync<string>("dddd").Result;
-           o.RemoveAsync("dddd");
+    ```csharp
+	var o = CacheContainer.GetInstances<ICacheProvider>("ddlCache.Redis");
+	o.AddAsync("dddd", "gggg", 4444);
+	o.GetAsync<string>("dddd").Result;
+	o.RemoveAsync("dddd");
+```
            
-           DCLSystem拦截器集成
-web.config
 
-SocketPool，ObjectPool 默认minSize： 1 maxSize：50，并发数提高，请配置maxSize
- <configSections>
+**DCLS 拦截器集成 web.config
+SocketPool，ObjectPool 默认minSize： 1 maxSize：50，并发数提高，请配置maxSize**
+
+```xml
+<configSections>
     <section name="cachingProvider" type="DCLSystem.Core.Caching.Configurations.CacheWrapperSection, DCLSystem.Core.Caching" requirePermission="false" />
   </configSections>
-  <cachingProvider>
-  
+<cachingProvider>
     <bindings>
-    
       <binding id="ddlCache" class="DCLSystem.Core.Caching.RedisCache.RedisContext,DCLSystem.Core.Caching">
         <property name="appRuleFile" ref="rule"/>
         <property name="dataContextPool" value="ddls_sample">
@@ -88,5 +85,6 @@ SocketPool，ObjectPool 默认minSize： 1 maxSize：50，并发数提高，请�
       <property name="maxSize" value="50"/>
       </binding>
     </bindings>
-    
-  </cachingProvider>
+</cachingProvider>
+```
+ 
